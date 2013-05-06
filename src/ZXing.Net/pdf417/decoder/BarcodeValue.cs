@@ -43,15 +43,13 @@ namespace ZXing.PDF417.Internal
         public void SetValue(int barcodeValue)
         {
             // ints can't be null in C# - check for containmentship
+            int confidence = 0;
             if (values.ContainsKey(barcodeValue))
             {
-                int confidence = values[barcodeValue];
-                confidence ++;
-                values[barcodeValue] = confidence;
-            } else
-            {
-                values.Add(barcodeValue, 1);
-            }
+                confidence = values[barcodeValue];
+            } 
+            confidence ++;
+            values[barcodeValue] = confidence;
         }
 
         /// <summary>
@@ -60,12 +58,6 @@ namespace ZXing.PDF417.Internal
         /// <returns>an array of int, containing the values with the highest occurrence, or null, if no value was set.</returns>
         public int[] GetValue()
         {
-//            if (confidence == null || confidence.Count == 0)
-//            {
-//                return new int[0];
-//            }
-//            int max = (from pair in confidence select pair.Value).Max();
-//            return (from pair in confidence where pair.Value == max select pair.Key).ToArray();
             int maxConfidence = -1;
             List<int> result = new List<int>();
             foreach (var entry in values)

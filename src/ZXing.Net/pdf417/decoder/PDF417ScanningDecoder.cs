@@ -70,16 +70,16 @@ namespace ZXing.PDF417.Internal
                 if (imageTopLeft != null)
                 {
                     leftRowIndicatorColumn = GetRowIndicatorColumn(image, boundingBox, imageTopLeft, true, minCodewordWidth, maxCodewordWidth);
-                    Log.WriteLine("Before setRowNumbers\n" + leftRowIndicatorColumn);
+                    //Log.WriteLine("Before setRowNumbers\n" + leftRowIndicatorColumn);
                     leftRowIndicatorColumn.SetRowNumbers();
-                    Log.WriteLine("After setRowNumbers\n" + leftRowIndicatorColumn);
+                    //Log.WriteLine("After setRowNumbers\n" + leftRowIndicatorColumn);
                 }
                 if (imageTopRight != null)
                 {
                     rightRowIndicatorColumn = GetRowIndicatorColumn(image, boundingBox, imageTopRight, false, minCodewordWidth, maxCodewordWidth);
-                    Log.WriteLine("Before setRowNumbers\n" + rightRowIndicatorColumn);
+                    //Log.WriteLine("Before setRowNumbers\n" + rightRowIndicatorColumn);
                     rightRowIndicatorColumn.SetRowNumbers();
-                    Log.WriteLine("After setRowNumbers\n" + rightRowIndicatorColumn);
+                    //Log.WriteLine("After setRowNumbers\n" + rightRowIndicatorColumn);
                 }
                 detectionResult = Merge(leftRowIndicatorColumn, rightRowIndicatorColumn);
                 if (detectionResult == null)
@@ -334,8 +334,9 @@ namespace ZXing.PDF417.Internal
         private static DecoderResult CreateDecoderResult(DetectionResult detectionResult)
         {
             BarcodeValue[][] barcodeMatrix = CreateBarcodeMatrix(detectionResult);
+            // System.Diagnostics.Debug.WriteLine("Before Adjustment: \n" + ToString(barcodeMatrix));
             AdjustCodewordCount(detectionResult, barcodeMatrix);
-
+            // System.Diagnostics.Debug.WriteLine("After Adjustment: \n" + ToString(barcodeMatrix));
             List<int> erasures = new List<int>();
             int[] codewords = new int[detectionResult.RowCount * detectionResult.ColumnCount];
             List<int[]> ambiguousIndexValuesList = new List<int[]>();
@@ -418,6 +419,7 @@ namespace ZXing.PDF417.Internal
                 }
                 try
                 {
+
                     return DecodeCodewords(codewords, ecLevel, erasureArray);
                 } catch (ReaderException ignored)
                 {
@@ -877,12 +879,13 @@ namespace ZXing.PDF417.Internal
                 for (int column = 0; column < barcodeMatrix[row].Length; column++)
                 {
                     BarcodeValue barcodeValue = barcodeMatrix[row][column];
-                    if (barcodeValue.GetValue().Length == 0)
+                    int[] values = barcodeValue.GetValue();
+                    if (values.Length == 0)
                     {
                         formatter.Append("        ");
                     } else
                     {
-                        formatter.AppendFormat("{0,4}({0,3})", barcodeValue.GetValue()[0], barcodeValue.GetConfidence(barcodeValue.GetValue()[0]));
+                        formatter.AppendFormat("{0,4}({1,2})", values[0], barcodeValue.GetConfidence(values[0]));
                     }
                 }
                 formatter.Append("\n");

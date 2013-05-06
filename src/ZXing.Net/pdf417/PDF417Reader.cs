@@ -123,7 +123,7 @@ namespace ZXing.PDF417
                     // continue;
                     throw ReaderException.Instance;
                 }
-                System.Diagnostics.Debug.WriteLine("Result " + points.ToString() + " > " + decoderResult.Text + " " + decoderResult.RawBytes);
+                // System.Diagnostics.Debug.WriteLine("Result " + points.ToString() + " > " + decoderResult.Text + " " + decoderResult.RawBytes);
                 Result result = new Result(decoderResult.Text, decoderResult.RawBytes, points, BarcodeFormat.PDF_417);
                 result.putMetadata(ResultMetadataType.ERROR_CORRECTION_LEVEL, decoderResult.ECLevel);
                 PDF417ResultMetadata pdf417ResultMetadata = (PDF417ResultMetadata)decoderResult.Other;

@@ -78,6 +78,11 @@ namespace ZXing
       /// </summary>
       UPC_EAN_EXTENSION,
 
+        /// <summary>
+        /// PDF417-specific metadata
+        /// </summary>
+        PDF417_EXTRA_METADATA,
+
       /// <summary>
       /// If the code format supports structured append and
       /// the current scanned code is part of one then the

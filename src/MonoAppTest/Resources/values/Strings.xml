@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="hello">Tap to start Scanning</string>
+	<string name="app_name">MonoAppTest</string>
+</resources>
